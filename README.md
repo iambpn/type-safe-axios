@@ -1,4 +1,4 @@
-# Type-Safe Axios
+# TS-Axios-Wrapper
 
 A lightweight TypeScript wrapper around Axios that provides full type safety for API requests and responses.
 
@@ -14,9 +14,9 @@ A lightweight TypeScript wrapper around Axios that provides full type safety for
 ## Installation
 
 ```bash
-npm install type-safe-axios
+npm install ts-axios-wrapper
 # or
-yarn add type-safe-axios
+yarn add ts-axios-wrapper
 ```
 
 ## Basic Usage
@@ -24,7 +24,7 @@ yarn add type-safe-axios
 Define your API schema and start making fully type-safe requests:
 
 ```typescript
-import { TypedAxios } from "type-safe-axios";
+import { TypedAxios } from "ts-axios-wrapper";
 
 // Define your API schema
 type ApiSchema = {
@@ -77,7 +77,7 @@ You can provide a custom Axios instance with any configuration you need:
 
 ```typescript
 import axios from "axios";
-import { TypedAxios } from "type-safe-axios";
+import { TypedAxios } from "ts-axios-wrapper";
 
 const axiosInstance = axios.create({
   baseURL: "https://api.example.com",

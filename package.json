@@ -1,5 +1,5 @@
 {
-  "name": "type-safe-axios",
+  "name": "ts-axios-wrapper",
   "version": "1.0.0",
   "main": "dist/axios.wrapper.js",
   "exports": {
@@ -11,12 +11,16 @@
   "scripts": {
     "type-check": "tsc --noEmit",
     "build": "tsc",
+    "prepublish": "npm run type-check && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "axios": "^1.12.2"
   },
