@@ -14,10 +14,20 @@
     "prepublish": "npm run type-check && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "typescript",
+    "axios",
+    "type-safe",
+    "api",
+    "wrapper",
+    "ts-axios-wrapper",
+    "type-safe-axios",
+    "full-type-safety-axios",
+    "ts-axios"
+  ],
+  "author": "Bipin Maharjan",
   "license": "ISC",
-  "description": "",
+  "description": "A lightweight TypeScript wrapper around Axios that provides full type safety for API requests and responses.",
   "files": [
     "dist"
   ],
