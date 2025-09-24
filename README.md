@@ -1,8 +1,8 @@
 # TS-Axios-Wrapper
 
-A lightweight TypeScript wrapper around Axios that provides full type safety for API requests and responses.
+A lightweight TypeScript axios wrapper that provides full type safety for API requests and responses.
 
-## Features
+## Features of ts-axios-wrapper
 
 - **Type-Safe API Calls**: Define your API schema once and get complete type checking for all requests
 - **Path Parameter Validation**: Type checking for URL path parameters
@@ -21,7 +21,7 @@ yarn add ts-axios-wrapper
 
 ## Basic Usage
 
-Define your API schema and start making fully type-safe requests:
+Define your `ts-axios-wrapper` API schema and start making fully type-safe requests:
 
 ```typescript
 import { TypedAxios } from "ts-axios-wrapper";
@@ -47,24 +47,26 @@ type ApiSchema = {
 };
 
 // Create a typed instance
-const api = new TypedAxios<ApiSchema>();
+// this is just a axios wrapper.
+// You can pass your own axios instance with custom config if needed.
+const tsAxios = new TypedAxios<ApiSchema>();
 
 // Make type-safe requests
 async function example() {
   // GET with query params - TypeScript ensures you provide the required query params
-  const users = await api.request("GET", "/users", {
+  const users = await tsAxios.request("GET", "/users", {
     query: { search: "Alice" },
   });
   // users is typed as { id: number; name: string }[]
 
   // GET with path params - TypeScript ensures you provide the required path params
-  const user = await api.request("GET", "/users/:id", {
+  const user = await tsAxios.request("GET", "/users/:id", {
     params: { id: "123" },
   });
   // user is typed as { id: number; name: string }
 
   // POST with body - TypeScript ensures you provide the required body
-  const newUser = await api.request("POST", "/users", {
+  const newUser = await tsAxios.request("POST", "/users", {
     body: { name: "Alice" },
   });
   // newUser is typed as { id: number; name: string }
@@ -74,19 +76,19 @@ async function example() {
   // ---
 
   // GET with query params
-  const users1 = await api.GET("/users", {
+  const users1 = await tsAxios.GET("/users", {
     query: { search: "Alice" },
   });
   // users is typed as { id: number; name: string }[]
 
   // GET with path params
-  const user1 = await api.GET("/users/:id", {
+  const user1 = await tsAxios.GET("/users/:id", {
     params: { id: "123" },
   });
   // user is typed as { id: number; name: string }
 
   // POST with body
-  const newUser1 = await api.POST("/users", {
+  const newUser1 = await tsAxios.POST("/users", {
     body: { name: "Alice" },
   });
   // newUser is typed as { id: number; name: string
@@ -109,7 +111,7 @@ const axiosInstance = axios.create({
   },
 });
 
-const api = new TypedAxios<ApiSchema>(axiosInstance);
+const tsAxios = new TypedAxios<ApiSchema>(axiosInstance);
 ```
 
 ## API Schema Definition
@@ -140,7 +142,7 @@ type ApiSchema = {
 You can pass Axios config options for each individual request:
 
 ```typescript
-const user = await api.request("GET", "/users/:id", {
+const user = await tsAxios.request("GET", "/users/:id", {
   params: { id: "123" },
   // additional Axios config for this request
   config: {
