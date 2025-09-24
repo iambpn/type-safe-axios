@@ -10,6 +10,9 @@ type ApiSchema = {
       params: { id: string }; // ✅ required
       response: { id: number; name: string };
     };
+    user: {
+      response: { id: number; name: string };
+    };
   };
   POST: {
     "/users": {
@@ -20,6 +23,11 @@ type ApiSchema = {
       body: { title: string; content: string }; // ✅ required
       query: { publish: boolean }; // ✅ required
       response: { id: number; title: string };
+    };
+  };
+  "123": {
+    "/custom": {
+      response: { data: string };
     };
   };
 };
@@ -47,7 +55,18 @@ async function example() {
 
   // ✅ requires both body + query
   const post = await api.request("POST", "/posts", {
-    body: { title: "Hi", content: "World" },
+    body: { title: "Hello", content: "World" },
     query: { publish: true },
   });
+
+  /** direct access */
+  api.GET("user", {});
+
+  api.GET("/users", {
+    query: { search: "Alice" },
+  });
+
+  // custom method: Before you can use a custom method you need to modify the
+  // axios instance to allow it. This is outside the scope of this library.
+  api.request("123", "/custom", { returnAxiosResponse: true });
 }

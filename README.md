@@ -68,6 +68,28 @@ async function example() {
     body: { name: "Alice" },
   });
   // newUser is typed as { id: number; name: string }
+
+  // ---
+  // You can also use specific methods for convenience
+  // ---
+
+  // GET with query params
+  const users1 = await api.GET("/users", {
+    query: { search: "Alice" },
+  });
+  // users is typed as { id: number; name: string }[]
+
+  // GET with path params
+  const user1 = await api.GET("/users/:id", {
+    params: { id: "123" },
+  });
+  // user is typed as { id: number; name: string }
+
+  // POST with body
+  const newUser1 = await api.POST("/users", {
+    body: { name: "Alice" },
+  });
+  // newUser is typed as { id: number; name: string
 }
 ```
 
@@ -120,6 +142,7 @@ You can pass Axios config options for each individual request:
 ```typescript
 const user = await api.request("GET", "/users/:id", {
   params: { id: "123" },
+  // additional Axios config for this request
   config: {
     timeout: 5000,
     headers: {
@@ -132,3 +155,19 @@ const user = await api.request("GET", "/users/:id", {
 ## Examples
 
 See the [examples](./examples) directory for more usage examples.
+
+## Changelog
+
+- 1.0.1:
+
+  - Updated package description for clarity.
+
+- 1.2.1:
+
+  - Improved type definitions
+  - Switched from `axios.request` to specific method calls like `axios.get`, `axios.post`, etc. for better type inference.
+  - Added support for additional HTTP methods (PUT, DELETE, PATCH, HEAD, OPTIONS)
+  - Added `Raw Request` Support for more flexibility in making untyped requests.
+  - Switched from `EMS` to `CJS` Module system for better compatibility.
+  - Added `test` for easier testing during development.
+  - Updated `README.md` for better documentation.
