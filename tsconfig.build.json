@@ -4,5 +4,14 @@
     "rootDir": "./src",
     "outDir": "./dist"
   },
-  "exclude": ["**/*.test.ts", "**/*.spec.ts", "**/__tests__/**", "tests", "dist", "example", "node_modules"]
+  "exclude": [
+    "**/*.test.ts",
+    "**/*.test-d.ts",
+    "**/*.spec.ts",
+    "**/__tests__/**",
+    "tests",
+    "dist",
+    "example",
+    "node_modules"
+  ]
 }
