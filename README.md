@@ -162,7 +162,7 @@ See the [examples](./examples) directory for more usage examples.
 
   - Updated package description for clarity.
 
-- 1.2.1:
+- 1.1.0:
 
   - Improved type definitions
   - Switched from `axios.request` to specific method calls like `axios.get`, `axios.post`, etc. for better type inference.
