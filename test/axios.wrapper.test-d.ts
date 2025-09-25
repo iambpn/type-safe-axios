@@ -1,7 +1,8 @@
 import { beforeAll, describe, it } from "@jest/globals";
 import { expectError, expectType, expectNotType } from "jest-tsd";
 import { TypedAxios } from "../src/axios.wrapper";
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
+import { TypedAxiosError } from "../src/axios.types";
 
 type ApiSchema = {
   GET: {
@@ -29,6 +30,13 @@ type ApiSchema = {
     "/any-endpoint": {
       response: {
         success: boolean;
+      };
+    };
+  };
+  ERROR_HANDLER: {
+    "/": {
+      response: {
+        message: string;
       };
     };
   };
@@ -181,6 +189,19 @@ describe("Type Tests", () => {
         query: { filter: "active" },
       });
       expectType<AxiosResponse<any>>(res);
+    });
+
+    it("Verify Error type", async () => {
+      const error: TypedAxiosError<ApiSchema> = new AxiosError("Test", "404");
+      expectType<TypedAxiosError<ApiSchema>>(error);
+      expectType<ApiSchema["ERROR_HANDLER"]["/"]["response"]>(error.response!.data);
+    });
+
+    it("Verify Unknown Error type", async () => {
+      type schema = {};
+      const error: TypedAxiosError<schema> = new AxiosError("Test", "404");
+      expectType<TypedAxiosError<schema>>(error);
+      expectType<any>(error.response!.data);
     });
   });
 });

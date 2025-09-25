@@ -24,7 +24,7 @@ yarn add ts-axios-wrapper
 Define your `ts-axios-wrapper` API schema and start making fully type-safe requests:
 
 ```typescript
-import { TypedAxios } from "ts-axios-wrapper";
+import { TypedAxios, TypedAxiosError } from "ts-axios-wrapper";
 
 // Define your API schema
 type ApiSchema = {
@@ -42,6 +42,11 @@ type ApiSchema = {
     "/users": {
       body: { name: string };
       response: { id: number; name: string };
+    };
+  };
+  ERROR_HANDLER: {
+    "/": {
+      response: { message: string };
     };
   };
 };
@@ -92,6 +97,24 @@ async function example() {
     body: { name: "Alice" },
   });
   // newUser is typed as { id: number; name: string
+
+  //---
+  // Error Handling with Global Error Type
+  //---
+
+  try {
+    const user2 = await tsAxios.GET("/users/:id", {
+      params: { id: "non-existent-id" },
+    });
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      const typedError = error as TypedAxiosError<ApiSchema>;
+      // typedError is typed as AxiosResponse<{ message: string }>
+      console.error("API Error:", typedError.response?.data.message);
+    } else {
+      console.error("Unexpected Error:", error);
+    }
+  }
 }
 ```
 
@@ -132,6 +155,13 @@ type ApiSchema = {
       body?: any;
       // Response type
       response: any;
+    };
+  };
+  // Adding Global Error Type
+  ERROR_HANDLER: {
+    // Path must be "/"
+    "/": {
+      response: { [key: string]: any }; // Defile the shape of error response here
     };
   };
 };

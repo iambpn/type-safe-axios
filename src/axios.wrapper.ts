@@ -2,6 +2,8 @@ import axios, { type AxiosRequestConfig } from "axios";
 import type { ApiSchema, RequestConfig, ResponseType, SchemaEndpoints, SchemaHttpMethod } from "./axios.types";
 import { buildUrl } from "./axios.utility";
 
+export type { TypedAxiosError } from "./axios.types";
+
 /**
  * A type-safe wrapper around axios.
  * @param S The API schema defining the endpoints, methods, and their types.

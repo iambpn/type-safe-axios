@@ -1,6 +1,15 @@
-import { type AxiosRequestConfig, type AxiosResponse } from "axios";
+import { AxiosError, type AxiosRequestConfig, type AxiosResponse } from "axios";
 
-export type StandardMethods = "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD" | "OPTIONS" | (string & {});
+export type StandardMethods =
+  | "GET"
+  | "POST"
+  | "PUT"
+  | "DELETE"
+  | "PATCH"
+  | "HEAD"
+  | "OPTIONS"
+  | "ERROR_HANDLER"
+  | (string & {});
 
 type ExtractConfig<T> = (T extends { body: infer B } ? { body: B } : {}) &
   (T extends { params: infer P } ? { params: P } : {}) &
@@ -50,3 +59,13 @@ export type ResponseType<
       : R
     : R
   : never;
+
+export type TypedAxiosError<S extends ApiSchema> = S extends {
+  ERROR_HANDLER: {
+    "/": {
+      response: infer R;
+    };
+  };
+}
+  ? AxiosError<R>
+  : AxiosError<any>;
