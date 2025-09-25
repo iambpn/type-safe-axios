@@ -28,6 +28,10 @@
     "full-type-safety-axios",
     "ts-axios"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iambpn/ts-axios-wrapper"
+  },
   "author": "Bipin Maharjan",
   "license": "ISC",
   "description": "A lightweight TypeScript wrapper around Axios that provides full type safety for API requests and responses.",
