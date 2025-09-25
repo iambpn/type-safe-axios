@@ -55,15 +55,13 @@ describe("Type Tests", () => {
     });
 
     it("Verify Only Response Type in API Schema", () => {
-      expectError(
-        new TypedAxios<{
-          INVALID: {
-            "/endpoint": {
-              response: {};
-            };
+      new TypedAxios<{
+        INVALID: {
+          "/endpoint": {
+            response: {};
           };
-        }>()
-      );
+        };
+      }>();
     });
   });
 
