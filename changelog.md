@@ -17,6 +17,12 @@
 - 1.1.1
 
   - updated readme
+
 - 1.1.2
+
   - added main and types field in package.json for better compatibility with various module systems.
   - updated testcases and package.json scripts for better testing and building processes.
+
+- 1.1.3
+
+  - added `TypedAxiosError` for better type safe error handling. Uses `ERROR_HANDLER` key in schema to define error type.
