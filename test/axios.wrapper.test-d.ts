@@ -1,7 +1,7 @@
 import { beforeAll, describe, it } from "@jest/globals";
 import { expectError, expectType, expectNotType } from "jest-tsd";
 import { TypedAxios } from "../src/axios.wrapper";
-import { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { TypedAxiosError } from "../src/axios.types";
 
 type ApiSchema = {

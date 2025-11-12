@@ -34,7 +34,7 @@ export type { TypedAxiosError } from "./axios.types";
  * };
  */
 export class TypedAxios<S extends ApiSchema> {
-  constructor(private axiosInstance = axios) {}
+  constructor(private axiosInstance = axios.create()) {}
 
   async GET<U extends SchemaEndpoints<S, "GET">, O extends RequestConfig<S, "GET", U>>(
     url: U,
