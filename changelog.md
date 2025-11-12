@@ -26,3 +26,7 @@
 - 1.1.3
 
   - added `TypedAxiosError` for better type safe error handling. Uses `ERROR_HANDLER` key in schema to define error type.
+
+- 1.1.4
+
+  - fixed issue with using custom axios instance in `TypedAxios` class. Now supports passing a custom axios instance via constructor.
