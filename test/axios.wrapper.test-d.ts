@@ -25,6 +25,37 @@ type ApiSchema = {
         id: string;
       };
     };
+    "/optional-query": {
+      response: {
+        data: string;
+      };
+      query?: {
+        page?: number;
+        limit?: number;
+      };
+    };
+    "/no-query": {
+      response: {
+        items: string[];
+      };
+    };
+    "/complex-query": {
+      response: {
+        results: any[];
+      };
+      query: {
+        filters: {
+          status: string;
+          tags: string[];
+        };
+        metadata: Record<string, any>;
+        nested: {
+          deep: {
+            value: number;
+          };
+        };
+      };
+    };
   };
   ANY: {
     "/any-endpoint": {
@@ -202,6 +233,117 @@ describe("Type Tests", () => {
       const error: TypedAxiosError<schema> = new AxiosError("Test", "404");
       expectType<TypedAxiosError<schema>>(error);
       expectType<any>(error.response!.data);
+    });
+  });
+
+  describe("Verify Optional Query Parameters", () => {
+    it("Verify endpoint with optional query can be called without query", async () => {
+      const res = await client.GET("/optional-query", {});
+      expectType<{ data: string }>(res);
+    });
+
+    it("Verify endpoint with optional query can be called with partial query", async () => {
+      const res = await client.GET("/optional-query", {
+        query: {
+          page: 1,
+        },
+      });
+      expectType<{ data: string }>(res);
+    });
+
+    it("Verify endpoint with optional query can be called with full query", async () => {
+      const res = await client.GET("/optional-query", {
+        query: {
+          page: 1,
+          limit: 10,
+        },
+      });
+      expectType<{ data: string }>(res);
+    });
+
+    it("Verify endpoint with optional query can be called with empty query object", async () => {
+      const res = await client.GET("/optional-query", {
+        query: {},
+      });
+      expectType<{ data: string }>(res);
+    });
+  });
+
+  describe("Verify Arbitrary Query Parameters", () => {
+    it("Verify endpoint without defined query allows arbitrary query params", async () => {
+      const res = await client.GET("/no-query", {
+        query: {
+          anyKey: "anyValue",
+          anotherKey: 123,
+          boolKey: true,
+        },
+      });
+      expectType<{ items: string[] }>(res);
+    });
+
+    it("Verify endpoint without defined query can be called without query", async () => {
+      const res = await client.GET("/no-query", {});
+      expectType<{ items: string[] }>(res);
+    });
+
+    it("Verify endpoint without defined query allows empty query object", async () => {
+      const res = await client.GET("/no-query", {
+        query: {},
+      });
+      expectType<{ items: string[] }>(res);
+    });
+  });
+
+  describe("Verify Complex Query Types", () => {
+    it("Verify endpoint with nested object query parameters", async () => {
+      const res = await client.GET("/complex-query", {
+        query: {
+          filters: {
+            status: "active",
+            tags: ["tag1", "tag2"],
+          },
+          metadata: {
+            customField1: "value1",
+            customField2: 123,
+            customField3: true,
+            nested: {
+              deep: "value",
+            },
+          },
+          nested: {
+            deep: {
+              value: 42,
+            },
+          },
+        },
+      });
+      expectType<{ results: any[] }>(res);
+    });
+
+    it("Verify query with Record<string, any> accepts various types", async () => {
+      const res = await client.GET("/complex-query", {
+        query: {
+          filters: {
+            status: "active",
+            tags: ["a", "b"],
+          },
+          metadata: {
+            stringValue: "test",
+            numberValue: 100,
+            booleanValue: false,
+            arrayValue: [1, 2, 3],
+            objectValue: { key: "value" },
+            nullValue: null,
+            undefinedValue: undefined,
+          },
+          nested: {
+            deep: {
+              value: 999,
+            },
+          },
+        },
+      });
+      expectType<{ results: any[] }>(res);
     });
   });
 });

@@ -11,9 +11,13 @@ export type StandardMethods =
   | "ERROR_HANDLER"
   | (string & {});
 
-type ExtractConfig<T> = (T extends { body: infer B } ? { body: B } : {}) &
+type ExtractConfig<T = EndpointOptions> = (T extends { body: infer B } ? { body: B } : {}) &
   (T extends { params: infer P } ? { params: P } : {}) &
-  (T extends { query: infer Q } ? { query: Q } : {}) & {
+  (T extends { query: infer Q }
+    ? { query: Q }
+    : T extends { query?: infer Q }
+    ? { query?: Q }
+    : { query?: { [key in string]: any } }) & { // allow optional arbitrary query
     config?: AxiosRequestConfig;
     returnAxiosResponse?: boolean; // if true, return full Axios response instead of just data
   };
@@ -22,7 +26,7 @@ type EndpointOptions = {
   response: unknown;
   body?: unknown;
   params?: Record<string, string | number>;
-  query?: Record<string, string | number | boolean>;
+  query?: Record<string, any>;
   config?: AxiosRequestConfig;
   returnAxiosResponse?: boolean;
 };
@@ -32,6 +36,7 @@ export type ApiSchema = {
 };
 
 export type EndpointConfig = {
+  // URL as key
   [key in string]: EndpointOptions;
 };
 
