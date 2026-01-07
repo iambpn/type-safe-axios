@@ -30,3 +30,7 @@
 - 1.1.4
 
   - fixed issue with using custom axios instance in `TypedAxios` class. Now supports passing a custom axios instance via constructor.
+
+- 1.1.5
+
+  - fixed issue with query parameters type in `EndpointOptions`. Now supports optional and arbitrary query parameters.
